@@ -9,6 +9,16 @@ public class Arrays extends PApplet
 
 	float[] rainfall = {200, 260, 300, 150, 100, 50, 10, 40, 67, 160, 400, 420};
 
+	public float map1(float a, float b, float c, float d, float e)
+	{
+		float r1 = c - b;
+		float r2 = e - d;
+
+		float how_far = a - b;
+
+		return d + (how_far / r1) * r2;
+	}
+
 	public void settings()
 	{
 		size(500, 500);
@@ -51,6 +61,19 @@ public class Arrays extends PApplet
 
 		println("Highest rainfall: ", high_month, "with", high, "mm");
 		println("Lowest rainfall: ", low_month, "with", low, "mm");
+
+		float tot = 0 ;
+		for (float f : rainfall)
+		{
+			tot += f;	
+		}
+
+		float avg = tot / (float) rainfall.length;
+
+		println(map1(5, 0, 10, 0, 100));
+		println(map1(25, 20, 30, 200, 300));
+		println(map1(2, 25, 35, 0, 100));
+
 	}
 
 	public void setup() {
@@ -64,5 +87,13 @@ public class Arrays extends PApplet
 	
 	public void draw()
 	{	
+		background(0);
+		float w = width / (float) months.length;
+		for(int i = 0; i < months.length; i++)
+		{
+			float x = map1(i, 0 , months.length, 0, width);
+			rect(x, height, w, -rainfall[i]);
+
+		}
 	}
 }
