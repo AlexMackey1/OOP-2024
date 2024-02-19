@@ -3,6 +3,7 @@ package ie.tudublin;
 import processing.core.PApplet;
 
 public class LifeBoard{
+
     boolean[][] board;
 
     int rows;
@@ -22,14 +23,62 @@ public class LifeBoard{
         cellHeigth = p.height / (float) rows;
     }
 
+    void randomize()
+    {
+        for(int row = 0; row < rows; row++)
+        {
+            for(int col = 0; col < cols; col++)
+            {
+                float dice = p.random(1.0f);
+                board[row][col] = (dice < 0.5f);
+
+            }
+        }
+    }
+
     public void update()
     {
 
     }
 
+
+    public void setCell(int row, int col, boolean value)
+    {
+        if(row > 0 && col > 0 && row < col && col < cols)
+        {
+            board[row][col] = value;
+        }
+    }
+
+    public boolean getCell(int row, int col)
+    {
+        if(row > 0 && col > 0 && row < col && col < cols)
+        {
+            return board[row][col];
+        }
+        return false;
+    }
+
     public void render()
     {
-
+        for(int row = 0; row < rows; row++)
+        {
+            for(int col = 0; col < cols; col++)
+            {
+                float x = p.map(col, 0, cols, 0, p.width);
+                float y = row * cellHeigth;
+                p.stroke(0, 0, 0);
+                if(board[row][col])
+                {
+                    p.fill(255, 0, 0);
+                }
+                else
+                {
+                    p.noFill();
+                }
+                p.rect(x, y, cellWidth, cellHeigth);
+            }
+        }
     }
 
 }
